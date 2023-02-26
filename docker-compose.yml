@@ -1,0 +1,17 @@
+version: "3"
+services:
+  postgres_mtls:
+    image: postgres-mtls
+    container_name: kastela_postgres_mtls
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=kastela
+    volumes:
+      - postgres_mtls:/var/lib/postgresql/data
+volumes:
+  postgres_mtls:
+    name: kastela_postgres_mtls
+networks:
+  default:
+    name: kastela_postgres_mtls

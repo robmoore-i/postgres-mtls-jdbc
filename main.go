@@ -9,6 +9,7 @@ import (
 	"encoding/pem"
 	"log"
 	"math/big"
+	"net"
 	"os"
 	"path/filepath"
 	"time"
@@ -118,7 +119,8 @@ func main() {
 		ExtKeyUsage: []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth, x509.ExtKeyUsageClientAuth},
 		NotBefore:   time.Now(),
 		NotAfter:    time.Now().AddDate(10, 0, 0),
-		DNSNames:    []string{"127.0.0.1"}, // server hostname
+		DNSNames:    []string{"127.0.0.1"},              // server hostname
+		IPAddresses: []net.IP{net.ParseIP("127.0.0.1")}, // server ip
 	}
 	servCertDER, err := x509.CreateCertificate(rand.Reader, servTmpl, rootCert, servPriv.Public(), rootPriv)
 	if err != nil {
