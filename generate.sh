@@ -28,4 +28,4 @@ openssl req -new -key certs/client.key -subj "/CN=postgres" -out certs/client.cs
 openssl x509 -req -in certs/client.csr -days 3650 -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -out certs/client.crt
 
 # convert client private key to DER
-openssl pkcs8 -topk8 -inform PEM -outform DER -in client.key -out client.pk8 -nocrypt
+openssl pkcs8 -topk8 -inform PEM -outform DER -in certs/client.key -out certs/client.pk8 -nocrypt
