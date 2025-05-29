@@ -6,6 +6,9 @@ RUN chown 999:999 /var/lib/postgresql/postgresql.conf
 COPY ./pg_hba.conf /var/lib/postgresql/
 RUN chown 999:999 /var/lib/postgresql/pg_hba.conf
 
+COPY ./pg_ident.conf /var/lib/postgresql/
+RUN chown 999:999 /var/lib/postgresql/pg_ident.conf
+
 COPY ./certs/ca.crt /var/lib/postgresql/
 RUN chown 999:999 /var/lib/postgresql/ca.crt
 
