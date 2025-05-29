@@ -1,0 +1,5 @@
+[versions]
+postgresql = "42.7.5"
+
+[libraries]
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
