@@ -15,3 +15,7 @@ dependencies {
 application {
     mainClass.set("com.rob.pg.Main")
 }
+
+tasks.named<JavaExec>("run") {
+    systemProperty("certs.dir", rootProject.layout.projectDirectory.dir("../certs"))
+}
