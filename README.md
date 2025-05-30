@@ -1,19 +1,17 @@
 # Postgres mTLS
 
-1. `./generate.sh` need openssl >= 3
-2. `docker build -t postgres-mtls .`
-3. `docker compose up -d`
-4. `psql "host=127.0.0.1 port=15432 user=postgres dbname=postgres sslmode=verify-full sslcert=certs/client.crt sslkey=certs/client.key sslrootcert=certs/ca.crt"`
-5. `cd java-client`
-6. `./gradlew run --args "postgres"`
+1. `./bounce.sh` (requires openssl >= 3)
+2. `psql "host=127.0.0.1 port=15432 user=postgres dbname=postgres sslmode=verify-full sslcert=certs/client.crt sslkey=certs/client.key sslrootcert=certs/ca.crt"`
+3. `cd java-client`
+4. `./gradlew run --args "postgres"`
 
 #### Multiple roles
 
-```
-CREATE USER app LOGIN;
-```
+1. `CREATE USER app LOGIN;`
+2. `psql "host=127.0.0.1 port=15432 user=app dbname=postgres sslmode=verify-full sslcert=certs/client.crt sslkey=certs/client.key sslrootcert=certs/ca.crt"`
+3. `./gradlew run --args "app"`
 
-`psql "host=127.0.0.1 port=15432 user=app dbname=postgres sslmode=verify-full sslcert=certs/client.crt sslkey=certs/client.key sslrootcert=certs/ca.crt"`
+#### From a container
 
-`./gradlew run --args "app"`
-
+1. `./gradlew dockerBuild`
+2. `docker run --rm --network postgres_mtls postgres-mtls-jdbc app`

@@ -1,7 +1,7 @@
 services:
   postgres_mtls:
     image: postgres-mtls
-    container_name: postgres_mtls
+    container_name: postgres-mtls
     ports:
       - 15432:5432
     environment:

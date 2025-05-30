@@ -13,7 +13,7 @@ openssl req -x509 -key certs/ca.key -subj "/CN=root" -days 3650 -out certs/ca.cr
 openssl ecparam -name prime256v1 -genkey -noout -out certs/server.key
 
 # create server CSR
-openssl req -new -key certs/server.key -subj "/CN=server" -addext "subjectAltName=DNS:127.0.0.1,IP:127.0.0.1" -out certs/server.csr
+openssl req -new -key certs/server.key -subj "/CN=server" -addext "subjectAltName=DNS:127.0.0.1,DNS:postgres-mtls,IP:127.0.0.1" -out certs/server.csr
 
 # create server certificate
 openssl x509 -req -in certs/server.csr -days 3650 -CA certs/ca.crt -CAkey certs/ca.key -CAcreateserial -copy_extensions copy -out certs/server.crt
@@ -29,3 +29,6 @@ openssl x509 -req -in certs/client.csr -days 3650 -CA certs/ca.crt -CAkey certs/
 
 # convert client private key to DER
 openssl pkcs8 -topk8 -inform PEM -outform DER -in certs/client.key -out certs/client.pk8 -nocrypt
+
+# create client pkcs12 file
+openssl pkcs12 -export -in certs/client.crt -inkey certs/client.key -out certs/client.p12 -CAfile certs/ca.crt -name user -passout "pass:changeit"
